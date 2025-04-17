@@ -7,11 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -22,6 +19,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'cloudindustry-frontend'
-          slot-name: 'Production'
           package: release.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
