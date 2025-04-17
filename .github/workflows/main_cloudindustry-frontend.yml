@@ -18,16 +18,10 @@ jobs:
       - name: Zip static files for deployment
         run: zip release.zip ./* -r
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0B3B59DFE29A48D69AD4F4D1882F2326 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F64B984B1997482FAE9E1FFFA408D395 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1FB1FE08279B4C3390D5AEA0C2090550 }}
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'cloudindustry-frontend'
           slot-name: 'Production'
           package: release.zip
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
